@@ -4,8 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,5 +75,29 @@ public class FileUtil {
 			file.delete();
 		}
 		return false;
+	}
+	
+	public String uploadImage(Part part,String path) {
+		String name = "";
+		try {	
+			String path1 = "D:/Folder all/Vinaenter/WebsiteBanHang/WebContent/img";
+			String filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
+			
+			name = String.valueOf(new Date().getTime()+filename);
+			if(!Files.exists(Path.of(path1))){
+				Files.createDirectory(Path.of(path1));
+			}
+			part.write(path1+"/"+name);
+			if(!Files.exists(Path.of(path))){
+				Files.createDirectory(Path.of(path));
+			}
+			
+		    return name;
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Tsdsdsdhử");
+			return null;
+		}
 	}
 }

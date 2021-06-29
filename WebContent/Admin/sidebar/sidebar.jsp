@@ -20,7 +20,7 @@
               <div class="left-sidebar-content">
                 <ul class="sidebar-elements">
                   <li class="divider">Menu</li>
-                  <li class="active"><a href="<%=request.getContextPath()%>/admin"><i class="icon mdi mdi-home"></i><span>Dashboard</span></a>
+                  <li class="active"><a href="admin"><i class="icon mdi mdi-home"></i><span>Dashboard</span></a>
                   </li>
                   <li class="parent"><a href="#"><i class="icon mdi mdi-face"></i><span>Category</span></a>
                     <ul class="sub-menu">
@@ -42,21 +42,20 @@
                   </li>
                   <li class="parent"><a href="#"><i class="icon mdi mdi-dot-circle"></i><span>Order</span></a>
                     <ul class="sub-menu">
-                      <li><a href="form-elements.html">Danh sách</a>
+                      <li class="<%if(checkactive == "order"){ %> active<%}%>"> <a href="<%=request.getContextPath()%>/listorder">Danh sách</a>
                       </li>
-                      <li><a href="form-validation.html">Thống kê</a>
+                      <li class="<%if(checkactive == "detailorder"){ %> active<%}%>"><a>Detail</a>
                       </li>
                      
                     </ul>
                   </li>
-                  <li class="parent"><a href="#"><i class="icon mdi mdi-border-all"></i><span>Tables</span></a>
+                  <li class="parent"><a href="#"><i class="icon mdi mdi-border-all"></i><span>Blog</span></a>
                     <ul class="sub-menu">
-                      <li><a href="tables-general.html">General</a>
+                      <li class="<%if(checkactive == "blog"){ %> active<%}%>"> <a href="<%=request.getContextPath()%>/listblog">Danh sách</a>
                       </li>
-                      <li><a href="tables-datatables.html">Data Tables</a>
+                      <li class="<%if(checkactive == "addblog"){ %> active<%}%>"> <a href="<%=request.getContextPath()%>/addblog">Thêm blog</a>
                       </li>
-                      <li><a href="tables-filters.html"><span class="badge badge-primary float-right">New</span>Table Filters</a>
-                      </li>
+                      
                     </ul>
                   </li>
                   <li class="parent"><a href="#"><i class="icon mdi mdi-layers"></i><span>Pages</span></a>

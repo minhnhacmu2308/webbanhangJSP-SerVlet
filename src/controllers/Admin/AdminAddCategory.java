@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.CategoryService;
 import service.impl.CategoryServiceImpl;
+import utils.AuthenticationUtil;
 
 /**
  * Servlet implementation class AdminAddCategory
@@ -32,9 +33,15 @@ public class AdminAddCategory extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("checkactive", "addcategory");
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/addcategory.jsp");
-		dispatcher.forward(request, response);
+		
+		AuthenticationUtil auth = new AuthenticationUtil();
+		if(auth.checkToken(request)==true) {
+			request.setAttribute("checkactive", "addcategory");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/addcategory.jsp");
+			dispatcher.forward(request, response);
+		}else {
+			response.sendRedirect("admin");
+		}
 	}
 
 	/**

@@ -95,6 +95,14 @@ public class BlogModel {
 		this.create_time = create_time;
 		this.listComment = listComment;
 	}
+	
+	public BlogModel(String title, String author, String image, String detail) {
+		super();
+		this.title = title;
+		this.author = author;
+		this.image = image;
+		this.detail = detail;
+	}
 	public String toString() {
 		return "BlogModel [blogId=" + blogId + ", title=" + title + ", author=" + author + ", image=" + image
 				+ ", detail=" + detail + ", create_time=" + create_time + ", listComment=" + listComment + "]";

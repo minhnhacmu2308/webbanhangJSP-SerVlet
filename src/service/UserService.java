@@ -14,4 +14,6 @@ void delete(UserModel user);
 	
 	List<UserModel> getAll();
 	
+	String getFullName(int id);
+	
 }

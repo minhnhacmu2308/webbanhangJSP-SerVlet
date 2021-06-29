@@ -6,8 +6,12 @@ import models.OrderModel;
 
 public interface OrderDao {
 	
-	void delete(int  id);
+	boolean delete(int  id);
 	
-	 List<OrderModel> getAll();
+	List<OrderModel> getAll();
+	
+	OrderModel getOrderById(int id);
+	
+	boolean payment(int id);
 
 }

@@ -11,9 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Dao.AuthenticationDao;
+import models.StatisticalModel;
 import models.UserModel;
 import service.AuthenticationService;
+import service.StatisticalService;
 import service.impl.AuthenticationServiceImpl;
+import service.impl.StatisticalServiceImpl;
+import utils.AuthenticationUtil;
 
 /**
  * Servlet implementation class AdminLoginController
@@ -34,12 +38,22 @@ public class AdminLoginController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		UserModel user =(UserModel) session.getAttribute("admin");
-		if(user!=null) {
+		AuthenticationUtil auth = new AuthenticationUtil();
+		if(auth.checkToken(request)==true) {
+			
+			
+            StatisticalService service = new StatisticalServiceImpl();
+			
+			StatisticalModel statistical = service.getAll();
+			System.out.println(statistical);
+			
+			request.setAttribute("statistical", statistical);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/index.jsp");
 			dispatcher.forward(request, response);
 		}else {
+			
+			
+			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/login.jsp");
 			dispatcher.forward(request, response);
 		}
@@ -65,7 +79,17 @@ public class AdminLoginController extends HttpServlet {
 			HttpSession session = request.getSession();
 			UserModel user = authdao.getInformationUser(username);
 			session.setAttribute("admin", user);
+			StatisticalService service = new StatisticalServiceImpl();
+			
+			StatisticalModel statistical = service.getAll();
+			System.out.println(statistical);
+			
+			request.setAttribute("statistical", statistical);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/index.jsp");
+			dispatcher.forward(request, response);
+		}else {
+			request.setAttribute("mes", "error");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/login.jsp");
 			dispatcher.forward(request, response);
 		}
 		

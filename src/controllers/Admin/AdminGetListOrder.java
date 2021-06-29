@@ -3,6 +3,7 @@ package controllers.Admin;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,7 +44,14 @@ public class AdminGetListOrder extends HttpServlet {
 		// TODO Auto-generated method stub
 		OrderService order = new OrderServiceImpl();
 		List<OrderModel> list = order.getAll();
+		request.setAttribute("listO", list);
+		
 		System.out.println(list);
+		request.setAttribute("checkactive", "order");
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/order.jsp");
+		dispatcher.forward(request, response);
+		
 	}
 
 }

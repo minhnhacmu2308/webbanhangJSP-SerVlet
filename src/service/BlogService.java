@@ -6,11 +6,12 @@ import models.BlogModel;
 
 public interface BlogService {
     
-	void insert(BlogModel blog);
+boolean insert(BlogModel blog);
 	
-	void delete(BlogModel blog);
+	boolean delete(int id);
 	
-	void edit(BlogModel blog);
+	boolean edit(BlogModel blog);
 	
 	List<BlogModel> getAll();
+	
 }

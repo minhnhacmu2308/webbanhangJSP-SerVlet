@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -20,6 +21,8 @@ import service.CategoryService;
 import service.ProductService;
 import service.impl.CategoryServiceImpl;
 import service.impl.ProductServiceImpl;
+import utils.AuthenticationUtil;
+import utils.FileUtil;
 
 /**
  * Servlet implementation class AdminAddProduct
@@ -40,9 +43,15 @@ public class AdminAddProduct extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("checkactive", "addproduct");
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/addproduct.jsp");
-		dispatcher.forward(request, response);
+		
+		AuthenticationUtil auth = new AuthenticationUtil();
+		if(auth.checkToken(request)==true) {
+			request.setAttribute("checkactive", "addproduct");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/addproduct.jsp");
+			dispatcher.forward(request, response);
+		}else {
+			response.sendRedirect("admin");
+		}
 	}
 
 	/**
@@ -53,34 +62,33 @@ public class AdminAddProduct extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		ProductService pro = new ProductServiceImpl();
 		String productName = request.getParameter("nameproduct");
-		System.out.println(productName);
+		
 		String describe = request.getParameter("describe");
 		String price = request.getParameter("price");
-		System.out.println(price);
-		String catId = request.getParameter("option");
-		String filename = "";
-		PrintWriter out = response.getWriter();
-		try {
-			Part part  = request.getPart("file");
-			String path = request.getServletContext().getRealPath("")+"img";		
-			/* String path1 = "D:/Folder all/Vinaenter/WebsiteBanHang/WebContent/img"; */
-			filename = Path.of(part.getSubmittedFileName()).getFileName().toString();
-			if(!Files.exists(Path.of(path))){
-				Files.createDirectory(Path.of(path));
-			}
-			part.write(path+"/"+filename);
 		
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		System.out.println(filename);
-		ProductModel productmodel = new ProductModel(productName,describe,filename,Integer.parseInt(catId),Float.parseFloat(price));
-		boolean result = pro.insert(productmodel);
-		if(result == true) {
-			request.setAttribute("mes", "success");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/addproduct.jsp");
-			dispatcher.forward(request, response);
+		String catId = request.getParameter("option");
+		PrintWriter out = response.getWriter();
+		FileUtil fu = new FileUtil();
+		Part part  = request.getPart("file");
+		String path = request.getServletContext().getRealPath("")+"img";
+		String resultUpload = fu.uploadImage(part,path);
+		if(resultUpload !=null) {
+			ProductModel productmodel = new ProductModel(productName,describe,resultUpload,Integer.parseInt(catId),Float.parseFloat(price));
+			boolean result = pro.insert(productmodel);
+			if(result == true) {
+				request.setAttribute("mes", "success");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/Admin/addproduct.jsp");
+				dispatcher.forward(request, response);
+			}else {
+				out.println("  <div class=\"toast-header\" style=\"background-color: red\" >\r\n" + 
+						"   \r\n" + 
+						"    <strong class=\"me-auto\" style=\"color: #ffff\">Error</strong>\r\n" + 
+						"  \r\n" + 
+						"  </div>\r\n" + 
+						"  <div class=\"toast-body\">\r\n" + 
+						"    ❌ Upload error\r\n" + 
+						"  </div>");
+			}
 		}else {
 			out.println("  <div class=\"toast-header\" style=\"background-color: red\" >\r\n" + 
 					"   \r\n" + 
@@ -88,10 +96,13 @@ public class AdminAddProduct extends HttpServlet {
 					"  \r\n" + 
 					"  </div>\r\n" + 
 					"  <div class=\"toast-body\">\r\n" + 
-					"    ❌ Can not empty\r\n" + 
+					"    ❌ Upload error server\r\n" + 
 					"  </div>");
 		}
+		
 			
 	}
+	
+	
 
 }

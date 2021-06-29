@@ -1,6 +1,8 @@
 package controllers.Admin;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,8 +41,13 @@ public class AdminDeleteOrder extends HttpServlet {
 		
 		OrderService order = new OrderServiceImpl();
 		String id = request.getParameter("id");
-		order.delete(Integer.parseInt(id));
-		
+		boolean result = order.delete(Integer.parseInt(id));
+		request.setAttribute("mes", "success");
+		 
+		 if(result==true) {
+			 RequestDispatcher dispatcher =  request.getRequestDispatcher("listorder");
+				dispatcher.forward(request, response);
+		 }
 	}
 
 }

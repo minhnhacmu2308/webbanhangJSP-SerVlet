@@ -46,8 +46,8 @@ public class AdminDeleteCategory extends HttpServlet {
 		String idCat = request.getParameter("idcat");
 		System.out.println(idCat);
 		
-		 PrintWriter out = response.getWriter(); boolean result =
-		 category.delete(Integer.parseInt(idCat));
+		 PrintWriter out = response.getWriter(); 
+		 boolean result =  category.delete(Integer.parseInt(idCat));
 		 request.setAttribute("mes", "success");
 		 List<CategoryModel> listC = category.getAll();
 		 if(result==true) {

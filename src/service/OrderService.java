@@ -7,7 +7,11 @@ import models.OrderModel;
 
 public interface OrderService {
 	
-	void delete(int id);
+	boolean delete(int id);
 	
 	 List<OrderModel> getAll();
+	 
+	 OrderModel getOrderById(int id);
+	 
+		boolean payment(int id);
 }

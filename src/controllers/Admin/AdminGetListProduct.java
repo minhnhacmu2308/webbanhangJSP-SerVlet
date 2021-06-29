@@ -43,7 +43,6 @@ public class AdminGetListProduct extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProductDao product = new ProductDaoImpl();
-		
 		List<ProductModel> listP = product.getAll();
 		request.setAttribute("checkactive", "listproduct");
 		request.setAttribute("listP", listP);

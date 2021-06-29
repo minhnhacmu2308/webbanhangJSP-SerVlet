@@ -4,6 +4,7 @@ encoding//WebContent/blog.jsp=UTF-8
 encoding//WebContent/header/header1.jsp=UTF-8
 encoding//src/controllers/AddCartController.java=UTF-8
 encoding//src/controllers/AddWishListController.java=UTF-8
+encoding//src/controllers/Admin/AdminAddBlog.java=UTF-8
 encoding//src/controllers/Admin/AdminAddCategory.java=UTF-8
 encoding//src/controllers/Admin/AdminAddProduct.java=UTF-8
 encoding//src/controllers/Admin/AdminDeleteCategory.java=UTF-8

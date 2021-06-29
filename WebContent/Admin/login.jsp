@@ -13,8 +13,30 @@
     <link rel="stylesheet" type="text/css" href="Admin/assets\lib\perfect-scrollbar\css\perfect-scrollbar.css">
     <link rel="stylesheet" type="text/css" href="Admin/assets\lib\material-design-icons\css\material-design-iconic-font.min.css">
     <link rel="stylesheet" href="Admin/assets\css\app.css" type="text/css">
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
   </head>
   <body class="be-splash-screen">
+     <%String mes = (String) request.getAttribute("mes"); %>
+         <% if(mes =="error"){ %>
+         <script type="text/javascript">
+         $(document).ready(function(){
+		    	 $('#toast1').toast('show');
+		    });
+
+         </script>
+         
+         <%}else{ %>
+         <%} %>
+         
+    <div role="alert" aria-live="assertive" style=" z-index:2000; position: fixed;top: 20px;right: 20px;width: 300px" data-delay="2000" aria-atomic="true" id="toast1" class="toast" data-bs-autohide="false">
+    <div class="toast-header" style="background-color: red">
+   
+    <strong style="color: #ffff" class="me-auto">Error</strong>
+  </div>
+  <div class="toast-body">
+  Username or password incorret
+  </div>
+</div> 
     <div class="be-wrapper be-login">
       <div class="be-content">
         <div class="main-content container-fluid">

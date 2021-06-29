@@ -14,5 +14,7 @@ public interface UserDao {
 	
 	List<UserModel> getAll();
 	
+	UserModel findUserById(int id);
 
+	String getFullName(int id);
 }
